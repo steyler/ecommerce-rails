@@ -10,7 +10,9 @@ class Order < ApplicationRecord
   def add_product(product_id, quantity) 
     product = Product.find(product_id)
     if product.present? && product.stock > 0 && product.stock >= quantity
-      order_items.create(product: product, quantity: quantity, price: product.price ) 
+      order_items.create(product: product, quantity: quantity, price: product.price)
+       self.total += product.price * quantity
+       self.save
     end
   end
 
